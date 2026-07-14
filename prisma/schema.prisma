@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -12,19 +7,57 @@ datasource db {
   provider = "postgresql"
 }
 
+model Organization {
+  id         String               @id @default(cuid())
+  clerkOrgId String               @unique
+  name       String
+  slug       String               @unique
+  createdAt  DateTime             @default(now())
+  documents  Document[]
+  members    OrganizationMember[]
 
-// Define your database models here
+  @@map("organizations")
+}
 
-// User Model
+model OrganizationMember {
+  id             String       @id @default(cuid())
+  organizationId String
+  userId         String
+  role           String       @default("member")
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  user           User         @relation(fields: [userId], references: [id])
+
+  @@unique([organizationId, userId])
+  @@map("organization_members")
+}
 
 model User {
-  id          String   @id @default(cuid())
-  clerkOrgId  String   @unique
-  name        String
-  slug        String   @unique
-  createdAt   DateTime @default(now())
-  members     OrganizationMember[]
+  id          String               @id @default(cuid())
+  clerkUserId String               @unique
+  email       String
+  name        String?
+  createdAt   DateTime             @default(now())
   documents   Document[]
-  
-  @@map("organizations")
+  memberships OrganizationMember[]
+
+  @@map("users")
+}
+
+model Document {
+  id             String       @id @default(cuid())
+  name           String
+  content        String?
+  fileUrl        String?
+  fileSize       Int?
+  fileType       String?
+  aiSummary      String?
+  aiKeywords     String[]
+  sentiment      String?
+  organizationId String
+  userId         String
+  createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  user           User         @relation(fields: [userId], references: [id])
+
+  @@map("documents")
 }
