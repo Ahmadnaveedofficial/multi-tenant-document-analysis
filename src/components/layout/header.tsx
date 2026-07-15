@@ -10,6 +10,7 @@ import {
   useUser,
   SignInButton,
   SignUpButton,
+  Show,
 } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
@@ -27,9 +28,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-
 /*  Types    */
-
 
 interface NavItem {
   href: string;
@@ -37,9 +36,7 @@ interface NavItem {
   icon: LucideIcon;
 }
 
-
 /*   Route Constants    */
-
 
 const ROUTES = {
   HOME: "/",
@@ -48,16 +45,14 @@ const ROUTES = {
   SIGN_UP: "/sign-up",
 } as const;
 
-
 /*    Component    */
-
 
 export default function Header() {
   /* Hooks */
 
   const pathname = usePathname();
 
-  const { user, isSignedIn } = useUser();
+  const { user } = useUser();
 
   const { organization } = useOrganization();
 
@@ -85,15 +80,13 @@ export default function Header() {
           href: `/${organization.slug}/documents`,
           label: "Documents",
           icon: FileText,
-        }
+        },
       );
     }
 
     items.push({
       href: ROUTES.SELECT_ORG,
-      label: organization
-        ? "Switch Organization"
-        : "Organizations",
+      label: organization ? "Switch Organization" : "Organizations",
       icon: Users,
     });
 
@@ -119,25 +112,14 @@ export default function Header() {
 
   /* Navigation Renderer*/
 
-  const renderNavigation = (
-    mobile = false,
-    onClick?: () => void
-  ) => {
+  const renderNavigation = (mobile = false, onClick?: () => void) => {
     return navItems.map((item) => {
       const Icon = item.icon;
 
       return (
-        <Link
-          key={item.href}
-          href={item.href}
-          onClick={onClick}
-        >
+        <Link key={item.href} href={item.href} onClick={onClick}>
           <Button
-            variant={
-              isActiveRoute(item.href)
-                ? "secondary"
-                : "ghost"
-            }
+            variant={isActiveRoute(item.href) ? "secondary" : "ghost"}
             size={mobile ? "default" : "sm"}
             className={
               mobile
@@ -153,166 +135,123 @@ export default function Header() {
     });
   };
 
+  return (
+    <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        {/* Logo */}
 
+        <Link
+          href={ROUTES.HOME}
+          className="flex items-center gap-2 text-xl font-bold"
+        >
+          <Brain className="h-6 w-6 text-blue-600" />
+          <span>DocuAI</span>
+        </Link>
 
- return (
-  <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-    <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        {/* Desktop Navigation */}
 
-      {/* Logo */}
+        <nav className="hidden items-center gap-2 md:flex">
+          {renderNavigation()}
+        </nav>
 
-      <Link
-        href={ROUTES.HOME}
-        className="flex items-center gap-2 text-xl font-bold"
-      >
-        <Brain className="h-6 w-6 text-blue-600" />
-        <span>DocuAI</span>
-      </Link>
+        {/* Right Side */}
 
-      {/* Desktop Navigation */}
+        <div className="flex items-center gap-3">
+          {/* Desktop Authentication */}
 
-      <nav className="hidden items-center gap-2 md:flex">
-        {renderNavigation()}
-      </nav>
-
-      {/* Right Side */}
-
-      <div className="flex items-center gap-3">
-
-        {/* Desktop Authentication */}
-
-        <div className="hidden items-center gap-3 md:flex">
-
-          {isSignedIn ? (
-            <>
+          <div className="hidden items-center gap-3 md:flex">
+            <Show when="signed-in">
               <span className="text-sm text-muted-foreground">
-                {organization
-                  ? `In: ${userLabel}`
-                  : userLabel}
+                {organization ? `In: ${userLabel}` : userLabel}
               </span>
 
               <UserButton afterSignOutUrl="/" />
-            </>
-          ) : (
-            <>
+            </Show>
+
+            <Show when="signed-out">
               <SignInButton mode="modal">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="cursor-pointer"
-                >
+                <Button variant="ghost" size="sm" className="cursor-pointer">
                   <LogIn className="mr-2 h-4 w-4" />
                   Sign In
                 </Button>
               </SignInButton>
 
               <SignUpButton mode="modal">
-                <Button size="sm"
-                  className="cursor-pointer"
-                  >
+                <Button size="sm" className="cursor-pointer">
                   <UserPlus className="mr-2 h-4 w-4" />
                   Sign Up
                 </Button>
               </SignUpButton>
-            </>
-          )}
+            </Show>
+          </div>
 
-        </div>
+          {/* Mobile Menu */}
 
-        {/* Mobile Menu */}
+          <div className="md:hidden">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="cursor-pointer"
+                  />
+                }
+              >
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle menu</span>
+              </SheetTrigger>
 
-        <div className="md:hidden">
+              <SheetContent side="right" className="w-[300px]">
+                <div className="mt-8 flex flex-col gap-6">
+                  {/* Mobile Navigation */}
 
-          <Sheet
-            open={isOpen}
-            onOpenChange={setIsOpen}
-          >
+                  <div className="space-y-2">
+                    {renderNavigation(true, () => setIsOpen(false))}
+                  </div>
 
-           <SheetTrigger
-  render={
-    <Button variant="ghost" size="icon" className="cursor-pointer" />
-  }
->
-  <Menu className="h-5 w-5" />
-  <span className="sr-only">Toggle menu</span>
-</SheetTrigger>
+                  {/* Divider */}
 
-            <SheetContent
-              side="right"
-              className="w-[300px]"
-            >
+                  <div className="border-t pt-6">
+                    <Show when="signed-in">
+                      <div className="space-y-4">
+                        <p className="text-center text-sm text-muted-foreground">
+                          {organization ? `In: ${userLabel}` : userLabel}
+                        </p>
 
-              <div className="mt-8 flex flex-col gap-6">
-
-                {/* Mobile Navigation */}
-
-                <div className="space-y-2">
-
-                  {renderNavigation(
-                    true,
-                    () => setIsOpen(false)
-                  )}
-
-                </div>
-
-                {/* Divider */}
-
-                <div className="border-t pt-6">
-
-                  {isSignedIn ? (
-                    <div className="space-y-4">
-
-                      <p className="text-center text-sm text-muted-foreground">
-                        {organization
-                          ? `In: ${userLabel}`
-                          : userLabel}
-                      </p>
-
-                      <div className="flex justify-center">
-                        <UserButton afterSignOutUrl="/" />
+                        <div className="flex justify-center">
+                          <UserButton afterSignOutUrl="/" />
+                        </div>
                       </div>
+                    </Show>
 
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
+                    <Show when="signed-out">
+                      <div className="space-y-3">
+                        <SignInButton mode="modal">
+                          <Button
+                            variant="outline"
+                            className="w-full cursor-pointer"
+                          >
+                            <LogIn className="mr-2 h-4 w-4" />
+                            Sign In
+                          </Button>
+                        </SignInButton>
 
-                      <SignInButton mode="modal">
-
-                        <Button
-                          variant="outline"
-                          className="w-full cursor-pointer"
-                        >
-                          <LogIn className="mr-2 h-4 w-4" />
-                          Sign In
-                        </Button>
-
-                      </SignInButton>
-
-                      <SignUpButton mode="modal">
-
-                        <Button className="w-full cursor-pointer">
-                          <UserPlus className="mr-2 h-4 w-4" />
-                          Sign Up
-                        </Button>
-
-                      </SignUpButton>
-
-                    </div>
-                  )}
-
+                        <SignUpButton mode="modal">
+                          <Button className="w-full cursor-pointer">
+                            <UserPlus className="mr-2 h-4 w-4" />
+                            Sign Up
+                          </Button>
+                        </SignUpButton>
+                      </div>
+                    </Show>
+                  </div>
                 </div>
-
-              </div>
-
-            </SheetContent>
-
-          </Sheet>
-
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
-
       </div>
-
-    </div>
-  </header>
-);
+    </header>
+  );
 }
