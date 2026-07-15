@@ -27,9 +27,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-/* -------------------------------------------------------------------------- */
-/*                                   Types                                    */
-/* -------------------------------------------------------------------------- */
+
+/*  Types    */
+
 
 interface NavItem {
   href: string;
@@ -37,9 +37,9 @@ interface NavItem {
   icon: LucideIcon;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                              Route Constants                               */
-/* -------------------------------------------------------------------------- */
+
+/*   Route Constants    */
+
 
 const ROUTES = {
   HOME: "/",
@@ -48,12 +48,12 @@ const ROUTES = {
   SIGN_UP: "/sign-up",
 } as const;
 
-/* -------------------------------------------------------------------------- */
-/*                                 Component                                  */
-/* -------------------------------------------------------------------------- */
+
+/*    Component    */
+
 
 export default function Header() {
-  /* -------------------------------- Hooks -------------------------------- */
+  /* Hooks */
 
   const pathname = usePathname();
 
@@ -63,7 +63,7 @@ export default function Header() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  /* --------------------------- Navigation Items --------------------------- */
+  /* Navigation Items */
 
   const navItems = useMemo<NavItem[]>(() => {
     const items: NavItem[] = [
@@ -100,7 +100,7 @@ export default function Header() {
     return items;
   }, [organization]);
 
-  /* ---------------------------- Helper Methods ---------------------------- */
+  /* Helper Methods */
 
   const isActiveRoute = (href: string) => {
     if (href === ROUTES.HOME) {
@@ -117,7 +117,7 @@ export default function Header() {
     user?.primaryEmailAddress?.emailAddress ||
     "User";
 
-  /* ------------------------- Navigation Renderer -------------------------- */
+  /* Navigation Renderer*/
 
   const renderNavigation = (
     mobile = false,
@@ -141,8 +141,8 @@ export default function Header() {
             size={mobile ? "default" : "sm"}
             className={
               mobile
-                ? "w-full justify-start gap-2"
-                : "gap-2"
+                ? "w-full justify-start gap-2 cursor-pointer"
+                : "gap-2 cursor-pointer"
             }
           >
             <Icon className="h-4 w-4" />
@@ -199,6 +199,7 @@ export default function Header() {
                 <Button
                   variant="ghost"
                   size="sm"
+                  className="cursor-pointer"
                 >
                   <LogIn className="mr-2 h-4 w-4" />
                   Sign In
@@ -206,7 +207,9 @@ export default function Header() {
               </SignInButton>
 
               <SignUpButton mode="modal">
-                <Button size="sm">
+                <Button size="sm"
+                  className="cursor-pointer"
+                  >
                   <UserPlus className="mr-2 h-4 w-4" />
                   Sign Up
                 </Button>
@@ -230,6 +233,7 @@ export default function Header() {
               <Button
                 variant="ghost"
                 size="icon"
+                className="cursor-pointer"
               >
                 <Menu className="h-5 w-5" />
               </Button>
@@ -279,7 +283,7 @@ export default function Header() {
 
                         <Button
                           variant="outline"
-                          className="w-full"
+                          className="w-full cursor-pointer"
                         >
                           <LogIn className="mr-2 h-4 w-4" />
                           Sign In
@@ -289,7 +293,7 @@ export default function Header() {
 
                       <SignUpButton mode="modal">
 
-                        <Button className="w-full">
+                        <Button className="w-full cursor-pointer">
                           <UserPlus className="mr-2 h-4 w-4" />
                           Sign Up
                         </Button>

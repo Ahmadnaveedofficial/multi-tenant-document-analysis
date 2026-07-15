@@ -27,12 +27,12 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/sign-up">
-              <Button size="lg" className="px-8">
+              <Button size="lg" className="px-8 cursor-pointer">
                 Start Free Trial
               </Button>
             </Link>
             <Link href="/sign-in">
-              <Button size="lg" variant="outline" className="px-8">
+              <Button size="lg" variant="outline" className="px-8 cursor-pointer">
                 Sign In
               </Button>
             </Link>
@@ -95,7 +95,7 @@ export default function Home() {
             documents.
           </p>
           <Link href="/sign-up">
-            <Button size="lg" className="px-8">
+            <Button size="lg" className="px-8 cursor-pointer">
               Get Started Free
             </Button>
           </Link>
