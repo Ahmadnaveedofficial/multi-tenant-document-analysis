@@ -13,26 +13,30 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="py-20 text-center">
-        <div className="container max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+      <section className="py-12 sm:py-16 md:py-20 text-center">
+        <div className="container max-w-4xl mx-auto px-4 sm:px-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
             AI-Powered Document Analysis for{" "}
             <span className="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Teams
             </span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto">
             Upload, analyze, and collaborate on documents with your
             organization. Get instant AI insights and summaries.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/sign-up">
-              <Button size="lg" className="px-8 cursor-pointer">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
+            <Link href="/sign-up" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto px-8 cursor-pointer">
                 Start Free Trial
               </Button>
             </Link>
-            <Link href="/sign-in">
-              <Button size="lg" variant="outline" className="px-8 cursor-pointer">
+            <Link href="/sign-in" className="w-full sm:w-auto">
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto px-8 cursor-pointer"
+              >
                 Sign In
               </Button>
             </Link>
@@ -41,12 +45,12 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="py-16 bg-gray-50">
-        <div className="container max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
+      <section className="py-12 sm:py-16 bg-gray-50">
+        <div className="container max-w-6xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">
             Everything You Need
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {features.map((feature, index) => (
               <Card key={index} className="border-none shadow-sm">
                 <CardHeader>
@@ -65,9 +69,11 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16">
-        <div className="container max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
+      <section className="py-12 sm:py-16">
+        <div className="container max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">
+            How It Works
+          </h2>
           <div className="space-y-4 max-w-md mx-auto">
             {steps.map((step, index) => (
               <div
@@ -77,7 +83,7 @@ export default function Home() {
                 <div className="shrink-0 h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
                   <CheckCircle className="h-5 w-5 text-blue-600" />
                 </div>
-                <span className="font-medium">{step}</span>
+                <span className="font-medium text-sm sm:text-base">{step}</span>
               </div>
             ))}
           </div>
@@ -85,17 +91,17 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-linear-to-r from-blue-50 to-indigo-50">
-        <div className="container max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">
+      <section className="py-12 sm:py-16 md:py-20 bg-linear-to-r from-blue-50 to-indigo-50">
+        <div className="container max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
             Ready to analyze your documents?
           </h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base">
             Join thousands of teams using DocuAI to work smarter with their
             documents.
           </p>
-          <Link href="/sign-up">
-            <Button size="lg" className="px-8 cursor-pointer">
+          <Link href="/sign-up" className="inline-block w-full sm:w-auto px-4 sm:px-0">
+            <Button size="lg" className="w-full sm:w-auto px-8 cursor-pointer">
               Get Started Free
             </Button>
           </Link>
