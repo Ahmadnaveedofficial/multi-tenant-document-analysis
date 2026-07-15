@@ -228,17 +228,14 @@ export default function Header() {
             onOpenChange={setIsOpen}
           >
 
-            <SheetTrigger asChild>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                className="cursor-pointer"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-
-            </SheetTrigger>
+           <SheetTrigger
+  render={
+    <Button variant="ghost" size="icon" className="cursor-pointer" />
+  }
+>
+  <Menu className="h-5 w-5" />
+  <span className="sr-only">Toggle menu</span>
+</SheetTrigger>
 
             <SheetContent
               side="right"

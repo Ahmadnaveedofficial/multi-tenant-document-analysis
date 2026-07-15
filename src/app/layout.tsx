@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import { syncUserToDatabase } from "@/lib/clerk-auth/sync-user";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,11 +21,12 @@ export const metadata: Metadata = {
   description: "Analyze and collaborate on documents with Google Gemini AI",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await syncUserToDatabase();
   return (
     <ClerkProvider>
       <html
