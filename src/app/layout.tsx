@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { syncUserToDatabase } from "@/lib/clerk-auth/sync-user";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default async function RootLayout({
             <main className="flex-1"> {children}</main>
            {/* Footer */}
            <Footer/>
+           <Toaster position="top-right" richColors/>
             </div>
         </body>
       </html>

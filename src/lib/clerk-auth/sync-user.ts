@@ -48,6 +48,6 @@ export async function syncUserToDatabase() {
     return newUser;
   } catch (error) {
     console.error("Error syncing Clerk user:", error);
-    throw error;
+   return null;
   }
 }
