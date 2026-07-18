@@ -165,7 +165,7 @@ export default function Header() {
                 {organization ? `In: ${userLabel}` : userLabel}
               </span>
 
-              <UserButton afterSignOutUrl="/" />
+             <UserButton />
             </Show>
 
             <Show when="signed-out">
@@ -220,7 +220,7 @@ export default function Header() {
                         </p>
 
                         <div className="flex justify-center">
-                          <UserButton afterSignOutUrl="/" />
+                       <UserButton />
                         </div>
                       </div>
                     </Show>
