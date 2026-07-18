@@ -185,12 +185,14 @@ export function DocumentCard({
               {doc.aiSummary ? "Re-analyze with:" : "Analyze with:"}
             </div>
 
-            <Select
-              value={selectedAnalysisType}
-              onValueChange={(value: AnalysisType) =>
-                onAnalysisTypeChange(value)
-              }
-            >
+           <Select
+  value={selectedAnalysisType}
+  onValueChange={(value) => {
+    if (value !== null) {
+      onAnalysisTypeChange(value);
+    }
+  }}
+>
               <SelectTrigger className="w-full">
                 <SelectValue>
                   <div className="flex items-center gap-2">
