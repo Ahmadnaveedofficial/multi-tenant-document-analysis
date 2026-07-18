@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -30,7 +29,7 @@ interface DocumentCardProps {
   document: Document;
   isAnalyzing: boolean;
   selectedAnalysisType: AnalysisType;
-  onAnalysisTypeChange: (type: AnalysisType) => void;
+  onAnalysisTypeChange: (type: AnalysisType) => void;z
   onAnalyze: (documentId: string) => void;
   onDelete: (documentId: string) => void;
   onToggleSummary: (documentId: string) => void;

@@ -60,59 +60,59 @@ export function DocumentUploadDialog({
   };
 
   // Handle upload
-const handleUpload = async () => {
-  if (!organization || !user || !selectedFile) {
-    toast.error("Please select a file");
-    return;
-  }
-
-  if (!documentName.trim()) {
-    toast.error("Please enter a document name");
-    return;
-  }
-
-  setIsUploading(true);
-
-  const formData = new FormData();
-  formData.append("name", documentName);
-  formData.append("organizationId", organization.id);
-  formData.append("file", selectedFile);
-
-  try {
-    await axios.post("/api/documents", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    toast.success("Document uploaded successfully!");
-
-    // Reset form
-    setDocumentName("");
-    setSelectedFile(null);
-    setIsOpen(false);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+  const handleUpload = async () => {
+    if (!organization || !user || !selectedFile) {
+      toast.error("Please select a file");
+      return;
     }
 
-    onUploadSuccess?.();
-  } catch (error) {
-    console.error("Upload error:", error);
-
-    if (axios.isAxiosError(error)) {
-      toast.error(
-        error.response?.data?.message ||
-          error.response?.data?.error ||
-          "Upload failed"
-      );
-    } else {
-      toast.error("Upload failed");
+    if (!documentName.trim()) {
+      toast.error("Please enter a document name");
+      return;
     }
-  } finally {
-    setIsUploading(false);
-  }
-};
+
+    setIsUploading(true);
+
+    const formData = new FormData();
+    formData.append("name", documentName);
+    formData.append("organizationId", organization.id);
+    formData.append("file", selectedFile);
+
+    try {
+      await axios.post("/api/documents", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      toast.success("Document uploaded successfully!");
+
+      // Reset form
+      setDocumentName("");
+      setSelectedFile(null);
+      setIsOpen(false);
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+
+      onUploadSuccess?.();
+    } catch (error) {
+      console.error("Upload error:", error);
+
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message ||
+            error.response?.data?.error ||
+            "Upload failed",
+        );
+      } else {
+        toast.error("Upload failed");
+      }
+    } finally {
+      setIsUploading(false);
+    }
+  };
   // Reset form when dialog closes
   const handleDialogOpenChange = (open: boolean) => {
     setIsOpen(open);
