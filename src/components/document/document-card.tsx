@@ -29,7 +29,7 @@ interface DocumentCardProps {
   document: Document;
   isAnalyzing: boolean;
   selectedAnalysisType: AnalysisType;
-  onAnalysisTypeChange: (type: AnalysisType) => void;z
+  onAnalysisTypeChange: (type: AnalysisType) => void;
   onAnalyze: (documentId: string) => void;
   onDelete: (documentId: string) => void;
   onToggleSummary: (documentId: string) => void;
