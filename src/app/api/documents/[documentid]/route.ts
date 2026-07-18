@@ -6,7 +6,7 @@ import { ApiResponse } from "@/types/ApiResponse";
 
 interface RouteParams {
   params: Promise<{
-    documentId: string;
+    documentid: string;
   }>;
 }
 
@@ -24,13 +24,13 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
 
     /* Params */
 
-    const { documentId } = await params;
+    const { documentid } = await params;
 
     /* Find Document */
 
     const document = await prisma.document.findUnique({
       where: {
-        id: documentId,
+        id: documentid,
       },
       include: {
         organization: {
@@ -80,7 +80,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
 
     await prisma.document.delete({
       where: {
-        id: documentId,
+        id: documentid,
       },
     });
 
@@ -89,7 +89,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     if (blobUrl) {
       await deleteFromBlob(blobUrl).catch((error) => {
         console.error(
-          `Failed to delete blob for document ${documentId}:`,
+          `Failed to delete blob for document ${documentid}:`,
           error,
         );
       });
@@ -99,7 +99,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
 
     return NextResponse.json(
       new ApiResponse(200, "Document deleted successfully", {
-        id: documentId,
+        id: documentid,
       }),
       {
         status: 200,
