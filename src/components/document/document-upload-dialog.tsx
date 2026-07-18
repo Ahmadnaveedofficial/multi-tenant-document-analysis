@@ -20,7 +20,7 @@ import axios from "axios";
 
 interface DocumentUploadDialogProps {
   onUploadSuccess?: () => void;
-  trigger?: React.ReactNode;
+  trigger?: React.ReactElement;
 }
 
 export function DocumentUploadDialog({
@@ -128,14 +128,16 @@ export function DocumentUploadDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogOpenChange}>
-      <DialogTrigger asChild>
-        {trigger || (
-          <Button>
-            <Upload className="h-4 w-4 mr-2" />
-            Upload Document
-          </Button>
-        )}
-      </DialogTrigger>
+    <DialogTrigger
+  render={
+    trigger || (
+      <Button>
+        <Upload className="h-4 w-4 mr-2" />
+        Upload Document
+      </Button>
+    )
+  }
+/>
       <DialogContent className="sm:max-w-125">
         <DialogHeader>
           <DialogTitle>Upload Document</DialogTitle>
