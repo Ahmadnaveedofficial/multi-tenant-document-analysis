@@ -75,7 +75,7 @@ export function DocumentUploadDialog({
 
     const formData = new FormData();
     formData.append("name", documentName);
-    formData.append("organizationId", organization.id);
+    formData.append("clerkOrgId", organization.id);
     formData.append("file", selectedFile);
 
     try {

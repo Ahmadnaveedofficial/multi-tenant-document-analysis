@@ -1,12 +1,12 @@
 import { put, del } from "@vercel/blob";
 import { ApiError } from "@/types/ApiError";
 
-const token = process.env.BLOB_READ_WRITE_TOKEN;
+const token = process.env.DOCS_READ_WRITE_TOKEN;
 
 if (!token) {
   throw new ApiError(
     500,
-    "BLOB_READ_WRITE_TOKEN is missing."
+    "DOCS_READ_WRITE_TOKEN is missing."
   );
 }
 
